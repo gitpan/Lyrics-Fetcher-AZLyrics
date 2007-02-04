@@ -1,0 +1,15 @@
+--- #YAML:1.0
+name:                Lyrics-Fetcher-AZLyrics
+version:             0.01
+abstract:            Get song lyrics from www.azlyrics.com
+license:             ~
+generated_by:        ExtUtils::MakeMaker version 6.31
+distribution_type:   module
+requires:     
+    HTML::TokeParser:              0
+    LWP::UserAgent:                0
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.2.html
+    version: 1.2
+author:
+    - David Precious <davidp@preshweb.co.uk>
