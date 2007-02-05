@@ -1,6 +1,6 @@
 package Lyrics::Fetcher::AZLyrics;
 
-# $Id: AZLyrics.pm 100 2007-02-04 20:43:41Z davidp $
+# $Id: AZLyrics.pm 107 2007-02-05 22:52:36Z davidp $
 
 use 5.008007;
 use strict;
@@ -9,7 +9,7 @@ use LWP::UserAgent;
 use HTML::TokeParser;
 use Carp;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 # the HTTP User-Agent we'll send:
 our $AGENT = "Perl/Lyrics::Fetcher::AZLyrics $VERSION";
