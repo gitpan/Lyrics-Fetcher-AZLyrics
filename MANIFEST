@@ -2,6 +2,10 @@ Changes
 Makefile.PL
 MANIFEST
 README
-t/Lyrics-Fetcher-AZLyrics.t
+META.yml
+t/1-basic.t
+t/2-pod.t
+t/3-pod-coverage.t
 lib/Lyrics/Fetcher/AZLyrics.pm
-META.yml                                 Module meta-data (added by MakeMaker)
+eg/example.pl
+eg/example-direct.pl
