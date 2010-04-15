@@ -1,6 +1,6 @@
 package Lyrics::Fetcher::AZLyrics;
 
-# $Id: AZLyrics.pm 460 2008-09-11 23:02:16Z davidp $
+# $Id$
 
 use 5.008000;
 use strict;
@@ -9,7 +9,7 @@ use LWP::UserAgent;
 use HTML::Strip;
 use Carp;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 # the HTTP User-Agent we'll send:
 our $AGENT = "Perl/Lyrics::Fetcher::AZLyrics $VERSION";
@@ -66,34 +66,21 @@ sub _parse {
 
     # Nasty - look for everything in between the two ringtones links:
     if (my ($goodbit) = $html =~
-        m{<\!-- END OF RINGTONE -->(.+)<\!-- RINGTONE -->}msi)
+        m{<\!-- END OF RINGTONE 1 -->(.+)<\!-- RINGTONE 2 -->}msi)
     {
-        my $text = $hs->parse($html);
-
-        # the page title should look like "<ARTIST> LYRICS" on a line
-        # by itself:
-        unless ($text =~ s/^.*LYRICS \n?//xgs) {
-            carp("No page title found, this HTML doesn't look right");
-            return;
-        }
-
-        # Find the [ www.azlyrics.com ] line
-        unless ($text =~ s/\[ .+ www\.azlyrics\.com .+ \]//xmg) {
-            carp("No azlyrics.com line found");
-            return;
-        }
+        my $text = $hs->parse($goodbit);
 
         # Remove mentions of ringtones:
         $text =~ s/^ .+ ringtone .+ $//xmgi;
 
         # Scoop out any credits for these lyrics:
         my @credits;
+        @Lyrics::Fetcher::azcredits = ();
         while ($text =~ s{\[ Thanks \s to \s (.+) \]}{}xgi) {
-            push @credits, $1;
+            push @Lyrics::Fetcher::azcredits, $1;
         }
-        # bodge... do this twice, to avoid the '... used only once' warning
-        @Lyrics::Fetcher::azcredits = @credits;
-        @Lyrics::Fetcher::azcredits = @credits;
+
+        $text =~ s/\s*\[.+at \s www.AZLyrics.com\s+\]\s*//xmgi;
 
         # finally, clear up excess blank lines:
         $text =~ s/(\r?\n){2,}/\n\n/gs;
